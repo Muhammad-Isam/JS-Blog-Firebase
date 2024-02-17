@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="first">
+        <header><h1>Welcome to Kawish Blog</h1></header>
+
+        <input type="text" id="email" placeholder="Enter your email here"
+            class="input input-bordered input-success w-full max-w-xs" />
+        <input type="password" id="password" placeholder="Enter your password here"
+            class="input input-bordered input-success w-full max-w-xs" />
+        <button class="btn btn-wide btn-success" id="signinBtn">
+            Sign in
+        </button>
+        <button class="btn btn-wide btn-success" id="loginWithGoogleBtn">
+            Sign in with Google
+        </button>
+        <p>Don't have an account? <a href="signup.html"><u style="color: rgb(26, 26, 228);">Sign up</u></a> now!</p>
+        <p>Forgot your password? <a id="resetpass"><u style="color: rgb(26, 26, 228);">Reset password</u></a> now!</p>
+    </div>
+
+
+    <script src="app.js" type="module"></script>
+</body>
+
+</html>

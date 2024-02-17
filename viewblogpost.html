@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div id="owner">
+        <!-- NAVBAR STARTS -->
+        <div class="navbar bg-base-100">
+            <div class="flex-1">
+                <a href="index.html" class="btn btn-ghost text-xl">Kawish</a>
+            </div>
+
+            <div class="flex-none gap-2">
+                <input type="text" id="searchBar" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+
+                <div class="form-control">
+                    <label id="uemail"></label>
+                </div>
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                            <img alt="Tailwind CSS Navbar component" id="uimage"
+                                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                        </div>
+                    </div>
+                    <ul tabindex="0"
+                        class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                        <li><a id="changePass">Change password</a></li>
+                        <li><a id="resetpass">Reset password</a></li>
+                        <li id="logoutBtn"><a>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- NAVBAR ENDS -->
+    </div>
+    <div id="blogContentContainer">
+
+    </div>
+    <script src="app.js" type="module"></script>
+    </script>
+</body>
+
+</html>
