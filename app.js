@@ -115,12 +115,17 @@ const loadBlogs = () => {
   const q = query(collection(db, "blog"), orderBy("createdAt", "desc"));
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    blogs = querySnapshot.docs.map((doc) => doc.data());
+    const blogData = [];
 
-    const blogsHTML = querySnapshot.docs
-      .map((doc) => {
-        const blogs = doc.data();
-        const timestamp = blogs.createdAt;
+    querySnapshot.forEach((doc) => {
+      blogData.push({ id: doc.id, ...doc.data() });
+    });
+
+    console.log(blogData);
+
+    const blogsHTML = blogData
+      .map((blog) => {
+        const timestamp = blog.createdAt;
         const date = new Date(timestamp);
         const hours = date.getHours();
         const minutes = date.getMinutes();
@@ -130,15 +135,15 @@ const loadBlogs = () => {
           <div class="collapse bg-base-200 bpost">
             <input type="radio" name="my-accordion-1" />
             <div class="collapse-title text-xl font-medium">
-              ${blogs.title}
+              ${blog.title}
             </div>
             <div class="collapse-content">
-              <p>${blogs.text.substring(0, 250)} <a style="color: orange;" class="readMore" data-createdAt="${timestamp}" data-blog-id="${doc.id}"><u>Read More...</u></a></p>
+              <p>${blog.text.substring(0, 250)} <a style="color: orange;" class="readMore" data-createdAt="${timestamp}" data-blog-id="${blog.id}"><u>Read More...</u></a></p>
               <div class="avatar" id="detailContainer">
                 <div class="w-10 rounded">
-                  <img src="${blogs.photoURL}" alt="Tailwind-CSS-Avatar-component" />
+                  <img src="${blog.photoURL}" alt="Tailwind-CSS-Avatar-component" />
                 </div>
-                <p id="blogCreator">${blogs.displayName}</p>
+                <p id="blogCreator">${blog.displayName}</p>
                 <p id="blogDate">${date.toString().substring(4, 15)} </p>
               </div>
             </div>
@@ -153,11 +158,11 @@ const loadBlogs = () => {
     const readMoreElements = document.querySelectorAll('.readMore');
     readMoreElements.forEach((readMoreElement) => {
       readMoreElement.addEventListener('click', async () => {
-        blogID = readMoreElement.getAttribute('data-createdAt');
+        const blogID = readMoreElement.getAttribute('data-createdAt');
         const clickedBlogID = readMoreElement.getAttribute('data-blog-id');
 
         // Log the relevant blog's data
-        const clickedBlog = blogs.find(blog => blog.id === clickedBlogID);
+        const clickedBlog = blogData.find(blog => blog.id === clickedBlogID);
         if (clickedBlog) {
           console.log("Clicked Blog Data:", clickedBlog);
 
@@ -173,6 +178,8 @@ const loadBlogs = () => {
     });
   });
 };
+
+
 
 searchBarBtn && searchBarBtn.addEventListener("keyup", (event) => {
 
@@ -232,8 +239,6 @@ const loadBlogByID = () => {
   } else {
     console.error("Clicked Blog data not found in localStorage");
   }
-
-
 
 };
 
