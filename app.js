@@ -306,13 +306,13 @@ const onLoad = () => {
       }
     } else if (!user && (currentPageName === "index.html" || currentPageName === "" || currentPageName === "createblog.html" || currentPageName === "viewblogpost.html")) {
       setNavBar();
-      if (currentPageName !== "index.html" && currentPageName !== "" && currentPageName !== "signup.html" && currentPageName !== "login.html") {
+      if (currentPageName !== "index.html" && currentPageName !== "" && currentPageName !== "signup.html" && currentPageName !== "login.html"&& currentPageName !== "viewblogpost.html") {
         window.location.href = "index.html";
       }
     }
-    if (currentPageName !== "viewblogpost.html" && currentPageName !== "createblog.html")
+    if (!user && (currentPageName !== "viewblogpost.html" && currentPageName !== "createblog.html"))
       loadBlogs();
-    if (currentPageName === "viewblogpost.html") {
+    if (!user && (currentPageName === "viewblogpost.html")) {
       loadBlogByID();
       loadReplies();
 
