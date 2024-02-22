@@ -246,7 +246,7 @@ const loadBlogByID = () => {
 const setNavBar = () => {
   owner.innerHTML = `<div class="navbar bg-base-100">
         <div class="flex-1">
-            <a href="" class="btn btn-ghost text-xl">Kawish</a>
+            <a href="index.html" class="btn btn-ghost text-xl">Kawish</a>
         </div>
         <div class="blogPost">
                 <button class="btn btn-sm btn-success" id="blogPost">Post</button>
