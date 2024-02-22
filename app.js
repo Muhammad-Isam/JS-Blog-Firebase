@@ -310,9 +310,9 @@ const onLoad = () => {
         window.location.href = "index.html";
       }
     }
-    if (!user && (currentPageName !== "viewblogpost.html" && currentPageName !== "createblog.html"))
+    if ((currentPageName !== "viewblogpost.html" && currentPageName !== "createblog.html"))
       loadBlogs();
-    if (!user && (currentPageName === "viewblogpost.html")) {
+    if ((currentPageName === "viewblogpost.html")) {
       loadBlogByID();
       loadReplies();
 
