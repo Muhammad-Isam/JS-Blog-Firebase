@@ -42,7 +42,7 @@ const blogContent = document.getElementById("blogContent");
 const blogTitle = document.getElementById("blogTitle");
 const content = document.getElementById("content");
 let blogContentContainer //= document.getElementById("blogContentContainer");
-let blogs;
+let blogs ;
 let blogData;
 let blogID;
 let clickedBlog
@@ -115,7 +115,7 @@ const loadBlogs = () => {
   const q = query(collection(db, "blog"), orderBy("createdAt", "desc"));
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const blogData = [];
+    blogData = [];
 
     querySnapshot.forEach((doc) => {
       blogData.push({ id: doc.id, ...doc.data() });
@@ -182,22 +182,14 @@ const loadBlogs = () => {
 
 
 searchBarBtn && searchBarBtn.addEventListener("keyup", (event) => {
-
   const searchValue = event.target.value.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-  let searchBarHTML = `<ul class="menu bg-base-200 w-56 rounded-box">`;
-  blogs.forEach((blog) => {
+  blogData.forEach((blog) => {
     const blogTitle = blog.title.toLowerCase(); // Convert to lowercase for case-insensitive comparison
 
     if (blogTitle.includes(searchValue)) {
-      searchBarHTML +=
-        `<li><a>${blog.title}</a></li>`
-        // console.log(blog.title);
-
+      console.log(blog.title);
     }
-
-  })
-  searchBarHTML += `</ul>`;
-  console.log(searchBarHTML)
+  });
 });
 
 const loadBlogByID = () => {
