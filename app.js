@@ -42,12 +42,13 @@ const blogContent = document.getElementById("blogContent");
 const blogTitle = document.getElementById("blogTitle");
 const content = document.getElementById("content");
 let blogContentContainer //= document.getElementById("blogContentContainer");
-let blogs ;
+let blogs;
 let blogData;
 let blogID;
 let clickedBlog
 let lgnBtn;
 let postBtn = document.getElementById("blogPost");
+const searchComp = document.getElementById("searchComp");
 const submitBtn = document.getElementById("submitBtn");
 const cancelBtn = document.getElementById("cancelBtn")
 let submitReplyBtn;// = document.getElementById("submitReply")
@@ -179,18 +180,57 @@ const loadBlogs = () => {
   });
 };
 
-
+// searchBarBtn && searchBarBtn.addEventListener("blur", () => {
+//   // Clear the list when the search bar loses focus
+//   searchComp.innerHTML = "";
+// });
 
 searchBarBtn && searchBarBtn.addEventListener("keyup", (event) => {
-  const searchValue = event.target.value.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-  blogData.forEach((blog) => {
-    const blogTitle = blog.title.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+  const searchValue = event.target.value.toLowerCase();
+  if (!searchValue.trim()) {
+    searchComp.innerHTML = "";
 
-    if (blogTitle.includes(searchValue)) {
-      console.log(blog.title);
-    }
-  });
+  }
+  else {
+    let listHTML = `<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">`;
+
+    blogData.forEach((blog) => {
+      const blogTitle = blog.title.toLowerCase();
+      if (blogTitle.includes(searchValue)) {
+        listHTML += `<li><a class="searchB" data-blog-id="${blog.id}">${blog.title}</a></li>`;
+      }
+    });
+
+    listHTML += `</ul>`;
+    searchComp.innerHTML = listHTML;
+
+    // Add event listener to all elements with class "searchB"
+    const searchBElements = document.querySelectorAll('.searchB');
+    searchBElements.forEach((searchBElement) => {
+      searchBElement.addEventListener('click', async () => {
+        const clickedBlogID = searchBElement.getAttribute('data-blog-id');
+        handleBlogClick(clickedBlogID);
+      });
+    })
+  };
 });
+
+// Function to handle click on blog item
+const handleBlogClick = (clickedBlogID) => {
+  // Log the relevant blog's data
+  const clickedBlog = blogData.find(blog => blog.id === clickedBlogID);
+  if (clickedBlog) {
+    console.log("Clicked Blog Data:", clickedBlog);
+
+    // Store clickedBlog data in localStorage
+    localStorage.setItem('clickedBlogData', JSON.stringify(clickedBlog));
+
+    // Now, navigate to the new page
+    window.location.href = `viewblogpost.html?id=${clickedBlogID}`;
+  } else {
+    console.error("Clicked Blog not found");
+  }
+};
 
 const loadBlogByID = () => {
   // Retrieve the clickedBlog data from localStorage
@@ -241,6 +281,7 @@ const setNavBar = () => {
             <a href="index.html" class="btn btn-ghost text-xl">Kawish</a>
         </div>
         <div class="blogPost">
+        
                 <button class="btn btn-sm btn-success" id="blogPost">Post</button>
                 </div>
         <div class="flex-none gap-2">
@@ -298,7 +339,7 @@ const onLoad = () => {
       }
     } else if (!user && (currentPageName === "index.html" || currentPageName === "" || currentPageName === "createblog.html" || currentPageName === "viewblogpost.html")) {
       setNavBar();
-      if (currentPageName !== "index.html" && currentPageName !== "" && currentPageName !== "signup.html" && currentPageName !== "login.html"&& currentPageName !== "viewblogpost.html") {
+      if (currentPageName !== "index.html" && currentPageName !== "" && currentPageName !== "signup.html" && currentPageName !== "login.html" && currentPageName !== "viewblogpost.html") {
         window.location.href = "index.html";
       }
     }

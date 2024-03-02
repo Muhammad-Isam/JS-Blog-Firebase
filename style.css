@@ -144,10 +144,16 @@ a:hover {
     margin-top: 2%;
 }
 
+#searchComp
+{
+    position: absolute;
+    right: 8%;
+    top: 8%;
+}
 #blogPost {
     position: absolute;
     right: 1%;
-    top: 7%;
+    top: 9%;
 }
 
 .first,
