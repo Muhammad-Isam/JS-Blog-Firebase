@@ -52,7 +52,7 @@ const searchComp = document.getElementById("searchComp");
 const submitBtn = document.getElementById("submitBtn");
 const cancelBtn = document.getElementById("cancelBtn")
 let submitReplyBtn;// = document.getElementById("submitReply")
-const searchBarBtn = document.getElementById("searchBar");
+let searchBarBtn = document.getElementById("searchBar");
 
 const storeUserData = async (uid, displayName, photoURL, email) => {
   try {
@@ -185,13 +185,12 @@ const loadBlogs = () => {
 //   searchComp.innerHTML = "";
 // });
 
-searchBarBtn && searchBarBtn.addEventListener("keyup", (event) => {
+const handleSearch = (event) => {
   const searchValue = event.target.value.toLowerCase();
+
   if (!searchValue.trim()) {
     searchComp.innerHTML = "";
-
-  }
-  else {
+  } else {
     let listHTML = `<ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">`;
 
     blogData.forEach((blog) => {
@@ -211,9 +210,11 @@ searchBarBtn && searchBarBtn.addEventListener("keyup", (event) => {
         const clickedBlogID = searchBElement.getAttribute('data-blog-id');
         handleBlogClick(clickedBlogID);
       });
-    })
-  };
-});
+    });
+  }
+};
+
+searchBarBtn && searchBarBtn.addEventListener("keyup", handleSearch);
 
 // Function to handle click on blog item
 const handleBlogClick = (clickedBlogID) => {
@@ -231,6 +232,7 @@ const handleBlogClick = (clickedBlogID) => {
     console.error("Clicked Blog not found");
   }
 };
+
 
 const loadBlogByID = () => {
   // Retrieve the clickedBlog data from localStorage
@@ -285,7 +287,7 @@ const setNavBar = () => {
                 <button class="btn btn-sm btn-success" id="blogPost">Post</button>
                 </div>
         <div class="flex-none gap-2">
-            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+        <input type="text" id="searchBar" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost" id="lgnBtn">
@@ -303,7 +305,11 @@ const setNavBar = () => {
     console.log(lgnBtn);
     window.location.href = "login.html";
   });
+  searchBarBtn = document.getElementById("searchBar");
+  searchBarBtn.addEventListener("keyup", handleSearch);
 }
+
+
 
 const gotoBlogPage = () => {
   const user = auth.currentUser;
@@ -481,7 +487,8 @@ const sendBlogReply = async () => {
     }
   }
   catch (err) {
-    console.error(err);
+    alert("You need to be logged in to send a reply!");
+    document.getElementById("reply").value = "";
   }
 }
 
